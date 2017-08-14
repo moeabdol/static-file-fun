@@ -10,6 +10,22 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use((req, res, next) => {
+  const filePath = path.join(__dirname, "static", req.url);
+  fs.stat(filePath, (err, fileInfo) => {
+    if (err) {
+      next();
+      return;
+    }
+
+    if (fileInfo.isFile()) {
+      res.sendFile(filePath);
+    } else {
+      next();
+    }
+  });
+});
+
 app.listen(3000, () => {
   console.log("App started on port 3000");
 });
