@@ -12,6 +12,10 @@ app.use((req, res) => {
   res.status(404).send("File not found!");
 });
 
+app.use((err, req, res, next) => {
+  res.status(500).send("Internal server error.");
+});
+
 app.listen(3000, () => {
   console.log("App started on port 3000");
 });
